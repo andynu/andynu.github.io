@@ -2,9 +2,7 @@
 title: Plausible Enough
 email: andynu@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  I like to make things. Software things, paper things, plastic things.
-  One of the best ways to learn is to teach, so here I share successes and
-  frustrations. Let's make things together.
+  Let's make things together.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://andynu.github.io" # the base hostname & protocol for your site
 twitter_username: andynu
