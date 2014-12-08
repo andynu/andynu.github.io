@@ -1,0 +1,10 @@
+---
+layout: post
+title: Makerbot
+categories: 3dPrinter
+---
+# Makerbot
+
+I'm the proud owner of a Makerbot Replicator 2.
+
+

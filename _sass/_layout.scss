@@ -2,6 +2,12 @@
  * Site header
  */
 .site-header {
+    background-image: url('/images/happysquid_92.gif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 0px -20px;
+    background-color: $hs-red;
+
     border-top: 5px solid $grey-color-dark;
     border-bottom: 1px solid $grey-color-light;
     min-height: 56px;
@@ -19,8 +25,14 @@
 
     &,
     &:visited {
-        color: $grey-color-dark;
+        color: $hs-cream;
     }
+}
+@include media-query($on-palm) {
+  .site-title {
+    margin-left: 92px;
+  }
+
 }
 
 .site-nav {
@@ -32,7 +44,7 @@
     }
 
     .page-link {
-        color: $text-color;
+        color: $hs-cream;
         line-height: $base-line-height;
 
         // Gaps between nav items, but not on the first one
