@@ -12,3 +12,5 @@ github_username:  andynu
 
 # Build settings
 markdown: kramdown
+plugins:
+  - jekyll-sitemap
