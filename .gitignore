@@ -1,3 +1,5 @@
 _site
 .sass-cache
 .python-version
+_posts/.obsidian
+tags
