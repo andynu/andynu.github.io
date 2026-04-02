@@ -36,12 +36,12 @@ In `~/.claude/settings.json`:
 
 Claude Code pipes a JSON object to your script's stdin on every update. The fields that matter here:
 
-```
-.model.display_name                        -- "Opus 4.6 (1M context)"
-.workspace.current_dir                     -- "/home/andy/projects/foo"
-.context_window.used_percentage            -- 0-100, pre-calculated
-.rate_limits.five_hour.used_percentage     -- 0-100, 5-hour rolling window
-.rate_limits.seven_day.used_percentage     -- 0-100, weekly limit
+```bash
+.model.display_name                        # "Opus 4.6 (1M context)"
+.workspace.current_dir                     # "/home/andy/projects/foo"
+.context_window.used_percentage            # 0-100, pre-calculated
+.rate_limits.five_hour.used_percentage     # 0-100, 5-hour rolling window
+.rate_limits.seven_day.used_percentage     # 0-100, weekly limit
 ```
 
 The `rate_limits` fields are available for Claude.ai Pro/Max subscribers after the first API response in a session. The `context_window.used_percentage` is always available.
