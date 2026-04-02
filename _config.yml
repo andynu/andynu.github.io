@@ -3,7 +3,7 @@ title: Plausible Enough
 email: andynu@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://andynu.github.io" # the base hostname & protocol for your site
+url: "https://andynu.github.io" # the base hostname & protocol for your site
 twitter_username: andynu
 github_username:  andynu
 

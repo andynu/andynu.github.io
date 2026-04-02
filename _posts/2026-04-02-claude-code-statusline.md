@@ -3,6 +3,8 @@ layout: post
 title:  "A Custom Status Line for Claude Code"
 date:   2026-04-02
 categories: claude-code
+image: /assets/images/claude-code-statusline.png
+description: "A custom status line for Claude Code that shows context window usage with a color-coded progress bar and 5-hour/7-day rate limit percentages, so you always know where you stand."
 ---
 
 Claude Code has a configurable status line that runs a shell command and displays the output at the bottom of your terminal. It pipes a JSON blob to your script's stdin with session metadata -- model info, context window usage, rate limits, workspace details, and more. Here's what I'm running with.
