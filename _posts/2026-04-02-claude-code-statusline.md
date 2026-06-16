@@ -4,10 +4,10 @@ title:  "A Custom Status Line for Claude Code"
 date:   2026-04-02
 categories: claude-code
 image: /assets/images/claude-code-statusline.png
-description: "A custom status line for Claude Code that shows context window usage with a color-coded progress bar and 5-hour/7-day rate limit percentages, so you always know where you stand."
+description: "A custom status line for Claude Code that shows context window usage with a color-coded progress bar and 5-hour/7-day rate limit percentages, so you always know where you stand. Works on Linux and macOS."
 ---
 
-Claude Code has a configurable status line that runs a shell command and displays the output at the bottom of your terminal. It pipes a JSON blob to your script's stdin with session metadata -- model info, context window usage, rate limits, workspace details, and more. Here's what I'm running with.
+Claude Code has a configurable status line that runs a shell command and displays the output at the bottom of your terminal. It pipes a JSON blob to your script's stdin with session metadata -- model info, context window usage, rate limits, workspace details, and more. Here's what I'm running with. It works on Linux and macOS unchanged.
 
 ![Claude Code status line](/assets/images/claude-code-statusline.png)
 
@@ -19,7 +19,7 @@ Left to right:
 - **Model** -- e.g. `Opus 4.6 (1M context)`
 - **Context window** -- a 10-character progress bar with percentage, color shifts from cyan to yellow at 75% and red at 90%
 - **Rate limits** -- `5h:42% 7d:18%` showing the 5-hour and 7-day usage windows, also color-coded by severity
-- **Git info** -- branch name, remote icon (GitHub/Gitea/GitLab), and dirty/clean status
+- **Git info** -- branch name and dirty/clean status
 
 ## Configuration
 
@@ -34,6 +34,8 @@ In `~/.claude/settings.json`:
 }
 ```
 
+You can also set this interactively with `/config` inside Claude Code.
+
 Claude Code pipes a JSON object to your script's stdin on every update. The fields that matter here:
 
 ```bash
@@ -47,6 +49,8 @@ Claude Code pipes a JSON object to your script's stdin on every update. The fiel
 The `rate_limits` fields are available for Claude.ai Pro/Max subscribers after the first API response in a session. The `context_window.used_percentage` is always available.
 
 ## The script
+
+Save as `~/.claude/statusline.sh` and `chmod +x` it. Uses `jq` to parse the input JSON.
 
 ```bash
 #!/bin/bash
@@ -69,7 +73,6 @@ SEVEN_DAY_PCT=$(echo "$input" | jq -r \
 # ANSI colors
 DIM='\033[2m'
 RESET='\033[0m'
-GRAY='\033[38;5;233m'
 VERY_DIM='\033[38;5;240m'
 CYAN='\033[36m'
 YELLOW='\033[33m'
@@ -125,7 +128,8 @@ fi
 # Git info
 GIT_INFO=""
 if git rev-parse --is-inside-work-tree &>/dev/null; then
-    BRANCH=$(git branch 2>/dev/null | grep '*' | cut -d' ' -f2)
+    BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null \
+             || git rev-parse --short HEAD 2>/dev/null)
     if [[ -n $(git status -s 2>/dev/null) ]]; then
         STATUS="✗"
     else
@@ -144,3 +148,11 @@ echo -ne "${USER}@${HOST}:${CWD} ${DIM}|${RESET}" \
 ```
 
 This is a slightly simplified version of what I actually run -- the real one has per-host color theming and git remote icons -- but the core is the same. The key insight is that Claude Code now provides `used_percentage` for both the context window and rate limits directly in the input JSON, so you don't need to calculate anything yourself or shell out to external tools.
+
+## Dependencies
+
+Needs `bash`, `jq`, and `git`. On macOS: `brew install jq` (git ships with `xcode-select --install`). On Linux: `apt install jq` or `dnf install jq`. The `#!/bin/bash` shebang sidesteps macOS's zsh default since Claude Code invokes the script directly, not via your login shell, and the script avoids bash 4+ features so stock macOS bash 3.2 is fine.
+
+---
+
+*Updated 2026-06-16: added macOS setup details.*
