@@ -7,8 +7,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # Never cancel an in-progress deploy; skip runs queued behind it.
 concurrency:
@@ -22,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@7f797815d8adceb1c412e7abefdd1ab4abc47a5f # v1.335.0
         with:
           ruby-version: '4.0'
           bundler-cache: true
@@ -37,6 +35,9 @@ jobs:
         uses: actions/upload-pages-artifact@v5
 
   deploy:
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
